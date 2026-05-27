@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - AutoParts Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #1a1a2e;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .btn-custom {
+            background-color: #e94560;
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #c73652;
+            color: white;
+        }
+
+        .product-img {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-stock {
+            background-color: #1a1a2e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <div class="d-flex gap-3">
+                {% if request.user.is_authenticated %}
+                <span class="nav-link">👤 {{ request.user.username }}</span>
+                <a class="nav-link" href="/users/logout/">Logout</a>
+                {% else %}
+                <a class="nav-link" href="/users/login/">Login</a>
+                <a class="nav-link" href="/users/signup/">Signup</a>
+                {% endif %}
+                <a class="nav-link" href="/cart/">Cart 🛒</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail -->
+    <div class="container mt-5">
+
+        <!-- Back Button -->
+        <a href="/" class="btn btn-outline-secondary mb-4">← Back to Home</a>
+
+        <div class="row g-5">
+
+            <!-- Product Image -->
+            <div class="col-md-6">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid product-img w-100"
+                    style="max-height: 400px; object-fit:cover;">
+                {% else %}
+                <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                    style="height:400px;">
+                    No Image Available
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-md-6">
+                <span class="badge badge-stock fs-6 p-2 mb-3">{{ product.category }}</span>
+                <h1 class="fw-bold">{{ product.name }}</h1>
+
+                {% if product.brand %}
+                <p class="text-muted">Brand: <strong>{{ product.brand }}</strong></p>
+                {% endif %}
+
+                <h2 class="text-danger fw-bold my-3">₹{{ product.price }}</h2>
+
+                <p class="fs-5">{{ product.description }}</p>
+
+                <!-- Stock Status -->
+                {% if product.stock > 0 %}
+                <p class="text-success fw-bold">✅ In Stock ({{ product.stock }} available)</p>
+                {% else %}
+                <p class="text-danger fw-bold">❌ Out of Stock</p>
+                {% endif %}
+
+                <!-- Add to Cart Button -->
+                {% if product.stock > 0 %}
+                <a href="/add-to-cart/{{ product.pk }}/" class="btn btn-custom btn-lg w-100 mt-3">
+                    Add to Cart 🛒
+                </a>
+                {% else %}
+                <button class="btn btn-secondary btn-lg w-100 mt-3" disabled>
+                    Out of Stock
+                </button>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5" style="background-color: #1a1a2e; color: white;">
+        <p>© 2024 AutoParts Store. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

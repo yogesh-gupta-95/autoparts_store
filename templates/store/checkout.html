@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AutoParts Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #1a1a2e; }
+        .navbar-brand, .nav-link { color: white !important; }
+        .btn-custom { background-color: #e94560; color: white; border: none; }
+        .btn-custom:hover { background-color: #c73652; color: white; }
+        .card { border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .card-input {
+            border: 1px solid #ced4da;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+        }
+        .card-input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h2 class="fw-bold mb-4">💳 Checkout</h2>
+
+                    <!-- Order Summary -->
+                    <h5 class="fw-bold">Order Summary</h5>
+                    <table class="table mb-4">
+                        {% for item in cart.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }} x {{ item.quantity }}</td>
+                            <td class="text-end">₹{{ item.get_total_price }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="fw-bold">
+                            <td>Total</td>
+                            <td class="text-end text-danger">₹{{ total }}</td>
+                        </tr>
+                    </table>
+
+                    <!-- Simple Payment Form -->
+                    <form method="POST" action="/payment/">
+                        {% csrf_token %}
+
+                        <h5 class="fw-bold mb-3">Card Details</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="card-input"
+                                   name="card_number"
+                                   placeholder="1234 5678 9012 3456"
+                                   maxlength="19">
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="text" class="card-input"
+                                       name="expiry"
+                                       placeholder="MM/YY"
+                                       maxlength="5">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">CVV</label>
+                                <input type="password" class="card-input"
+                                       name="cvv"
+                                       placeholder="123"
+                                       maxlength="3">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Name on Card</label>
+                            <input type="text" class="card-input"
+                                   name="card_name"
+                                   placeholder="Your Full Name">
+                        </div>
+
+                        <!-- Test Mode Notice -->
+                        <div class="alert alert-info mt-2">
+                            🧪 <strong>Test Mode</strong> — Use any details to simulate payment
+                        </div>
+
+                        <button type="submit" class="btn btn-custom w-100 btn-lg mt-2">
+                            Pay ₹{{ total }} 💳
+                        </button>
+
+                        <a href="/cart/" class="btn btn-outline-secondary w-100 mt-2">
+                            ← Back to Cart
+                        </a>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
