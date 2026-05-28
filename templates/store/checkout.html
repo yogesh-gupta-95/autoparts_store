@@ -12,16 +12,12 @@
         .btn-custom { background-color: #e94560; color: white; border: none; }
         .btn-custom:hover { background-color: #c73652; color: white; }
         .card { border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .card-input {
-            border: 1px solid #ced4da;
-            padding: 12px;
+        .section-title {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 10px 15px;
             border-radius: 8px;
-            width: 100%;
-            font-size: 16px;
-        }
-        .card-input:focus {
-            outline: none;
-            border-color: #e94560;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -34,83 +30,128 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card p-4">
-                    <h2 class="fw-bold mb-4">💳 Checkout</h2>
+    <div class="container mt-5 mb-5">
+        <div class="row g-4">
 
-                    <!-- Order Summary -->
-                    <h5 class="fw-bold">Order Summary</h5>
-                    <table class="table mb-4">
-                        {% for item in cart.items.all %}
-                        <tr>
-                            <td>{{ item.product.name }} x {{ item.quantity }}</td>
-                            <td class="text-end">₹{{ item.get_total_price }}</td>
-                        </tr>
-                        {% endfor %}
-                        <tr class="fw-bold">
-                            <td>Total</td>
-                            <td class="text-end text-danger">₹{{ total }}</td>
-                        </tr>
-                    </table>
+            <!-- Left Side — Shipping & Payment -->
+            <div class="col-md-7">
+                <form method="POST" action="/payment/">
+                    {% csrf_token %}
 
-                    <!-- Simple Payment Form -->
-                    <form method="POST" action="/payment/">
-                        {% csrf_token %}
+                    <!-- Shipping Info -->
+                    <div class="card p-4 mb-4">
+                        <h5 class="section-title">🚚 Shipping Information</h5>
 
-                        <h5 class="fw-bold mb-3">Card Details</h5>
-
-                        <div class="mb-3">
-                            <label class="form-label">Card Number</label>
-                            <input type="text" class="card-input"
-                                   name="card_number"
-                                   placeholder="1234 5678 9012 3456"
-                                   maxlength="19">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" name="first_name" class="form-control" placeholder="Yogesh" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="last_name" class="form-control" placeholder="Sharma" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" placeholder="yogesh@gmail.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" name="phone" class="form-control" placeholder="9876543210" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <input type="text" name="address" class="form-control" placeholder="House No, Street Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">City</label>
+                                <input type="text" name="city" class="form-control" placeholder="Mumbai" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <input type="text" name="state" class="form-control" placeholder="MH" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" name="pincode" class="form-control" placeholder="400001" required>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
+                    <!-- Payment Info -->
+                    <div class="card p-4 mb-4">
+                        <h5 class="section-title">💳 Payment Information</h5>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" name="card_number" class="form-control"
+                                       placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label">Expiry Date</label>
-                                <input type="text" class="card-input"
-                                       name="expiry"
-                                       placeholder="MM/YY"
-                                       maxlength="5">
+                                <input type="text" name="expiry" class="form-control"
+                                       placeholder="MM/YY" maxlength="5" required>
                             </div>
-                            <div class="col">
+                            <div class="col-md-6">
                                 <label class="form-label">CVV</label>
-                                <input type="password" class="card-input"
-                                       name="cvv"
-                                       placeholder="123"
-                                       maxlength="3">
+                                <input type="password" name="cvv" class="form-control"
+                                       placeholder="123" maxlength="3" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Name on Card</label>
+                                <input type="text" name="card_name" class="form-control"
+                                       placeholder="Your Full Name" required>
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Name on Card</label>
-                            <input type="text" class="card-input"
-                                   name="card_name"
-                                   placeholder="Your Full Name">
-                        </div>
-
-                        <!-- Test Mode Notice -->
-                        <div class="alert alert-info mt-2">
+                        <div class="alert alert-info mt-3">
                             🧪 <strong>Test Mode</strong> — Use any details to simulate payment
                         </div>
+                    </div>
 
-                        <button type="submit" class="btn btn-custom w-100 btn-lg mt-2">
-                            Pay ₹{{ total }} 💳
-                        </button>
+                    <button type="submit" class="btn btn-custom w-100 btn-lg">
+                        Place Order & Pay ₹{{ total }} 💳
+                    </button>
+                    <a href="/cart/" class="btn btn-outline-secondary w-100 mt-2">
+                        ← Back to Cart
+                    </a>
 
-                        <a href="/cart/" class="btn btn-outline-secondary w-100 mt-2">
-                            ← Back to Cart
-                        </a>
-                    </form>
+                </form>
+            </div>
 
+            <!-- Right Side — Order Summary -->
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <h5 class="section-title">📦 Order Summary</h5>
+
+                    {% for item in cart.items.all %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                        <span>₹{{ item.get_total_price }}</span>
+                    </div>
+                    {% endfor %}
+
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold fs-5">
+                        <span>Total</span>
+                        <span class="text-danger">₹{{ total }}</span>
+                    </div>
+
+                    <!-- Delivery Info -->
+                    <div class="alert alert-success mt-3">
+                        🚚 <strong>Free Delivery</strong> on this order!<br>
+                        📅 Expected delivery in <strong>3-5 days</strong>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+    <footer class="text-center py-4 mt-3" style="background-color: #1a1a2e; color: white;">
+        <p>© 2024 AutoParts Store. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse by Car - AutoParts Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #1a1a2e; }
+        .navbar-brand, .nav-link { color: white !important; }
+        .btn-custom { background-color: #e94560; color: white; border: none; }
+        .btn-custom:hover { background-color: #c73652; color: white; }
+        .card { border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .product-card { border-radius: 10px; transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .section-header { border-left: 5px solid #e94560; padding-left: 15px; }
+        .hero-car {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <div class="d-flex gap-3">
+                {% if request.user.is_authenticated %}
+                    <span class="nav-link">👤 {{ request.user.username }}</span>
+                    <a class="nav-link" href="/orders/">My Orders</a>
+                    <a class="nav-link" href="/users/logout/">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="/users/login/">Login</a>
+                    <a class="nav-link" href="/users/signup/">Signup</a>
+                {% endif %}
+                <a class="nav-link" href="/cart/">Cart 🛒</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero-car">
+        <h1 class="fw-bold">🔧 Find Parts for Your Car</h1>
+        <p class="fs-5">Select your car make and model to find compatible parts</p>
+    </div>
+
+    <div class="container mt-5">
+
+        <!-- Step 1 - Select Make -->
+        <div class="card p-4 mb-4">
+            <h4 class="fw-bold section-header mb-4">
+                Step 1 — Select Car Brand
+            </h4>
+            <div class="d-flex gap-3 flex-wrap">
+                {% for make in makes %}
+                <a href="/browse-by-car/?make={{ make.id }}"
+                   class="btn {% if selected_make.id == make.id %}btn-custom{% else %}btn-outline-secondary{% endif %} btn-lg">
+                    🚗 {{ make.name }}
+                </a>
+                {% empty %}
+                <p class="text-muted">No car brands added yet. Add them from admin panel!</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Step 2 - Select Model -->
+        {% if selected_make %}
+        <div class="card p-4 mb-4">
+            <h4 class="fw-bold section-header mb-4">
+                Step 2 — Select {{ selected_make.name }} Model
+            </h4>
+            <div class="d-flex gap-3 flex-wrap">
+                {% for model in car_models %}
+                <a href="/browse-by-car/?make={{ selected_make.id }}&model={{ model.id }}"
+                   class="btn {% if selected_model.id == model.id %}btn-custom{% else %}btn-outline-secondary{% endif %}">
+                    {{ model.name }}
+                    {% if model.year %}({{ model.year }}){% endif %}
+                </a>
+                {% empty %}
+                <p class="text-muted">No models added for {{ selected_make.name }} yet!</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Step 3 - Show Products -->
+        {% if selected_model %}
+        <h3 class="fw-bold section-header mb-4">
+            Compatible Parts for {{ selected_model }}
+        </h3>
+
+        {% if products %}
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="card product-card h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top"
+                         style="height:200px; object-fit:cover;">
+                    {% else %}
+                    <div class="bg-secondary text-white d-flex align-items-center
+                                justify-content-center" style="height:200px;">No Image</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="text-muted">{{ product.category }}</p>
+                        <h5 class="text-danger fw-bold">₹{{ product.price }}</h5>
+                        <a href="/product/{{ product.pk }}/"
+                           class="btn btn-custom w-100 mt-2">View Details 🔍</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center mt-3">
+            <h4>No parts found for {{ selected_model }} 😢</h4>
+            <p class="text-muted">Try adding compatible parts from the admin panel!</p>
+            <a href="/" class="btn btn-custom btn-lg mt-2">Browse All Products</a>
+        </div>
+        {% endif %}
+        {% endif %}
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5" style="background-color: #1a1a2e; color: white;">
+        <p>© 2024 AutoParts Store. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

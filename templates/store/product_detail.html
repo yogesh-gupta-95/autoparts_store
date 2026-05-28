@@ -118,6 +118,82 @@
         <p>© 2024 AutoParts Store. All rights reserved.</p>
     </footer>
 
+    <!-- Reviews Section -->
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+
+                <h3 class="fw-bold mb-4">⭐ Customer Reviews</h3>
+
+                <!-- Review Form -->
+                {% if request.user.is_authenticated %}
+                <div class="card p-4 mb-4" style="border-radius:15px;">
+                    <h5 class="fw-bold">Write a Review</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Star Rating -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Rating</label>
+                            <select name="rating" class="form-select">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Good</option>
+                                <option value="3">⭐⭐⭐ Average</option>
+                                <option value="2">⭐⭐ Poor</option>
+                                <option value="1">⭐ Terrible</option>
+                            </select>
+                        </div>
+
+                        <!-- Comment -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Your Review</label>
+                            <textarea name="comment" class="form-control"
+                                      rows="3"
+                                      placeholder="Write your experience..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom w-100">
+                            Submit Review ⭐
+                        </button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <a href="/users/login/">Login</a> to write a review!
+                </div>
+                {% endif %}
+
+                <!-- Show Reviews -->
+                {% if reviews %}
+                    {% for review in reviews %}
+                    <div class="card p-3 mb-3" style="border-radius:10px;">
+                        <div class="d-flex justify-content-between">
+                            <strong>👤 {{ review.user.username }}</strong>
+                            <small class="text-muted">
+                                {{ review.created_at|date:"d M Y" }}
+                            </small>
+                        </div>
+                        <div class="my-1">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    ⭐
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="mb-0">{{ review.comment }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No reviews yet. Be the first to review!</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
 </body>
 
 </html>
