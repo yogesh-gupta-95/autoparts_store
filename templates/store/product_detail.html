@@ -83,9 +83,56 @@
                 <span class="badge badge-stock fs-6 p-2 mb-3">{{ product.category }}</span>
                 <h1 class="fw-bold">{{ product.name }}</h1>
 
-                {% if product.brand %}
-                <p class="text-muted">Brand: <strong>{{ product.brand }}</strong></p>
-                {% endif %}
+                <!-- Specifications Table -->
+                <div class="card p-3 mb-3" style="border-radius:10px; background:#f8f9fa;">
+                    <h6 class="fw-bold mb-3">📋 Specifications</h6>
+                    <table class="table table-sm mb-0">
+                        {% if product.brand %}
+                        <tr>
+                            <td class="text-muted">Brand</td>
+                            <td><strong>{{ product.brand }}</strong></td>
+                        </tr>
+                        {% endif %}
+                        {% if product.part_number %}
+                        <tr>
+                            <td class="text-muted">Part Number</td>
+                            <td><strong>{{ product.part_number }}</strong></td>
+                        </tr>
+                        {% endif %}
+                        {% if product.weight %}
+                        <tr>
+                            <td class="text-muted">Weight</td>
+                            <td><strong>{{ product.weight }}</strong></td>
+                        </tr>
+                        {% endif %}
+                        {% if product.material %}
+                        <tr>
+                            <td class="text-muted">Material</td>
+                            <td><strong>{{ product.material }}</strong></td>
+                        </tr>
+                        {% endif %}
+                        {% if product.warranty %}
+                        <tr>
+                            <td class="text-muted">Warranty</td>
+                            <td><strong>{{ product.warranty }}</strong></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td class="text-muted">Category</td>
+                            <td><strong>{{ product.category }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Availability</td>
+                            <td>
+                                {% if product.stock > 0 %}
+                                <span class="badge bg-success">✅ In Stock ({{ product.stock }} left)</span>
+                                {% else %}
+                                <span class="badge bg-danger">❌ Out of Stock</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
                 <h2 class="text-danger fw-bold my-3">₹{{ product.price }}</h2>
 
@@ -113,10 +160,41 @@
         </div>
     </div>
 
+    <!-- Related Products -->
+    {% if related %}
+    <div class="container mt-5 mb-4">
+        <h3 class="fw-bold mb-4" style="border-left: 5px solid #e94560; padding-left: 15px;">
+            🔗 Related Products
+        </h3>
+        <div class="row g-4">
+            {% for item in related %}
+            <div class="col-md-3">
+                <div class="card h-100"
+                    style="border-radius:10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top"
+                        style="height:180px; object-fit:cover; border-radius:10px 10px 0 0;">
+                    {% else %}
+                    <div class="bg-secondary text-white d-flex align-items-center
+                                justify-content-center" style="height:180px;">No Image</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="fw-bold">{{ item.name }}</h6>
+                        <p class="text-muted small">{{ item.category }}</p>
+                        <h6 class="text-danger fw-bold">₹{{ item.price }}</h6>
+                        <a href="/product/{{ item.pk }}/" class="btn w-100 btn-sm"
+                            style="background-color:#e94560; color:white;">
+                            View Details 🔍
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
     <!-- Footer -->
-    <footer class="text-center py-4 mt-5" style="background-color: #1a1a2e; color: white;">
-        <p>© 2024 AutoParts Store. All rights reserved.</p>
-    </footer>
+
 
     <!-- Reviews Section -->
     <div class="container mt-5 mb-5">
@@ -147,9 +225,8 @@
                         <!-- Comment -->
                         <div class="mb-3">
                             <label class="form-label fw-bold">Your Review</label>
-                            <textarea name="comment" class="form-control"
-                                      rows="3"
-                                      placeholder="Write your experience..."></textarea>
+                            <textarea name="comment" class="form-control" rows="3"
+                                placeholder="Write your experience..."></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-custom w-100">
@@ -165,33 +242,33 @@
 
                 <!-- Show Reviews -->
                 {% if reviews %}
-                    {% for review in reviews %}
-                    <div class="card p-3 mb-3" style="border-radius:10px;">
-                        <div class="d-flex justify-content-between">
-                            <strong>👤 {{ review.user.username }}</strong>
-                            <small class="text-muted">
-                                {{ review.created_at|date:"d M Y" }}
-                            </small>
-                        </div>
-                        <div class="my-1">
-                            {% for i in "12345" %}
-                                {% if forloop.counter <= review.rating %}
-                                    ⭐
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <p class="mb-0">{{ review.comment }}</p>
+                {% for review in reviews %}
+                <div class="card p-3 mb-3" style="border-radius:10px;">
+                    <div class="d-flex justify-content-between">
+                        <strong>👤 {{ review.user.username }}</strong>
+                        <small class="text-muted">
+                            {{ review.created_at|date:"d M Y" }}
+                        </small>
+                    </div>
+                    <div class="my-1">
+                        {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %} ⭐ {% endif %} {% endfor %} </div>
+                            <p class="mb-0">{{ review.comment }}</p>
                     </div>
                     {% endfor %}
-                {% else %}
+                    {% else %}
                     <p class="text-muted">No reviews yet. Be the first to review!</p>
-                {% endif %}
+                    {% endif %}
 
+                </div>
             </div>
         </div>
-    </div>
+        <footer class="text-center py-4 mt-5" style="background-color: #1a1a2e; color: white;">
+            <p>© 2024 AutoParts Store. All rights reserved.</p>
+        </footer>
 
 </body>
+
 </html>
 
 </body>

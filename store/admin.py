@@ -7,11 +7,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display   = ['name', 'category', 'price', 'stock', 'is_available']
-    list_filter    = ['category', 'is_available']
-    search_fields  = ['name', 'brand']
-    list_editable  = ['price', 'stock', 'is_available']
-
+    list_display  = ['name', 'category', 'price', 'stock', 'is_available']
+    list_filter   = ['category', 'is_available']
+    search_fields = ['name', 'brand', 'part_number']
+    list_editable = ['price', 'stock', 'is_available']
+    
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['user', 'product', 'rating', 'created_at']

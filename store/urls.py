@@ -12,6 +12,8 @@ urlpatterns = [
     path('payment/', views.payment, name='payment'),
     path('order-success/', views.order_success, name='order_success'),
     path('orders/', views.order_history, name='order_history'),
+    path('order-tracking/<int:pk>/', views.order_tracking, name='order_tracking'),
     path('search/', views.search, name='search'),
+    path('browse-by-car/', views.browse_by_car, name='browse_by_car'),
+    path('sales-report/', views.sales_report, name='sales_report'),
 ]
-path('browse-by-car/', views.browse_by_car, name='browse_by_car'),

@@ -17,6 +17,10 @@ class Product(models.Model):
     stock        = models.PositiveIntegerField(default=0)
     image        = models.ImageField(upload_to='products/')
     brand        = models.CharField(max_length=200, blank=True)
+    part_number  = models.CharField(max_length=100, blank=True)
+    weight       = models.CharField(max_length=50, blank=True)
+    material     = models.CharField(max_length=100, blank=True)
+    warranty     = models.CharField(max_length=100, blank=True)
     is_available = models.BooleanField(default=True)
     created_at   = models.DateTimeField(auto_now_add=True)
 

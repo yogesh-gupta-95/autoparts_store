@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking - AutoParts Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #1a1a2e; }
+        .navbar-brand, .nav-link { color: white !important; }
+        .card { border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn-custom { background-color: #e94560; color: white; border: none; }
+        .section-header { border-left: 5px solid #e94560; padding-left: 15px; }
+
+        /* Tracking Steps */
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 40px 0;
+        }
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: #dee2e6;
+            z-index: 0;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 24px;
+            border: 3px solid #dee2e6;
+        }
+        .step.active .step-circle {
+            background: #e94560;
+            border-color: #e94560;
+            box-shadow: 0 0 15px rgba(233,69,96,0.4);
+        }
+        .step.done .step-circle {
+            background: #28a745;
+            border-color: #28a745;
+        }
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+        }
+        .step.active .step-label { color: #e94560; }
+        .step.done .step-label { color: #28a745; }
+        .dropdown-menu { background-color: #1a1a2e; }
+        .dropdown-item { color: white !important; }
+        .dropdown-item:hover { background-color: #e94560 !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts</a>
+            <div class="d-flex gap-3 align-items-center">
+                <a class="nav-link" href="/browse-by-car/">🚗 Find by Car</a>
+                <a class="nav-link" href="/cart/">🛒 Cart</a>
+                {% if request.user.is_authenticated %}
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown">
+                        👤 {{ request.user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/orders/">📦 My Orders</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/users/logout/">🚪 Logout</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="fw-bold mb-4 section-header">📦 Order Tracking</h2>
+
+        <div class="card p-4 mb-4">
+
+            <!-- Order Info -->
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <h5 class="fw-bold">Order #{{ order.pk }}</h5>
+                    <p class="text-muted">
+                        Placed on {{ order.created_at|date:"d M Y, h:i A" }}
+                    </p>
+                </div>
+                <h5 class="text-danger fw-bold">₹{{ order.total }}</h5>
+            </div>
+
+            <!-- Tracking Steps -->
+            <div class="tracking-steps">
+
+                <!-- Step 1 - Pending -->
+                <div class="step {% if order.status == 'pending' %}active{% elif order.status != 'pending' %}done{% endif %}">
+                    <div class="step-circle">⏳</div>
+                    <div class="step-label">Order Placed</div>
+                </div>
+
+                <!-- Step 2 - Paid -->
+                <div class="step {% if order.status == 'paid' %}active{% elif order.status == 'shipped' or order.status == 'delivered' %}done{% endif %}">
+                    <div class="step-circle">💳</div>
+                    <div class="step-label">Payment Done</div>
+                </div>
+
+                <!-- Step 3 - Shipped -->
+                <div class="step {% if order.status == 'shipped' %}active{% elif order.status == 'delivered' %}done{% endif %}">
+                    <div class="step-circle">🚚</div>
+                    <div class="step-label">Shipped</div>
+                </div>
+
+                <!-- Step 4 - Delivered -->
+                <div class="step {% if order.status == 'delivered' %}active{% endif %}">
+                    <div class="step-circle">📦</div>
+                    <div class="step-label">Delivered</div>
+                </div>
+
+            </div>
+
+            <!-- Current Status Message -->
+            <div class="alert mt-3
+                {% if order.status == 'pending' %}alert-warning
+                {% elif order.status == 'paid' %}alert-info
+                {% elif order.status == 'shipped' %}alert-primary
+                {% elif order.status == 'delivered' %}alert-success
+                {% endif %}">
+                {% if order.status == 'pending' %}
+                    ⏳ Your order has been placed and is being processed.
+                {% elif order.status == 'paid' %}
+                    💳 Payment confirmed! Your order is being prepared for shipping.
+                {% elif order.status == 'shipped' %}
+                    🚚 Your order is on the way! Expected delivery in 2-3 days.
+                {% elif order.status == 'delivered' %}
+                    📦 Your order has been delivered! Enjoy your purchase!
+                {% endif %}
+            </div>
+
+            <!-- Order Items -->
+            <h5 class="fw-bold mt-3">Order Items</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.product.price }}</td>
+                        <td>₹{{ item.get_total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="/orders/" class="btn btn-outline-secondary">
+                    ← Back to Orders
+                </a>
+                <a href="/" class="btn btn-custom">
+                    🛍️ Continue Shopping
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-4 mt-3" style="background-color: #1a1a2e; color: white;">
+        <p>© 2024 AutoParts Store. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
