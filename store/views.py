@@ -114,6 +114,15 @@ def payment(request):
                 product=item.product,
                 quantity=item.quantity,
             )
+            # Reduce stock
+            product = item.product
+            product.stock -= item.quantity
+            if product.stock < 0:
+                product.stock = 0
+            if product.stock == 0:
+                product.is_available = False
+            product.save()
+
         cart.items.all().delete()
         return redirect('order_success')
     return redirect('checkout')
