@@ -28,24 +28,24 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <a class="navbar-brand fw-bold fs-4" href="/">AutoParts Store</a>
             <div class="d-flex gap-3">
                 {% if request.user.is_authenticated %}
-                    <span class="nav-link">👤 {{ request.user.username }}</span>
+                    <span class="nav-link">{{ request.user.username }}</span>
                     <a class="nav-link" href="/orders/">My Orders</a>
                     <a class="nav-link" href="/users/logout/">Logout</a>
                 {% else %}
                     <a class="nav-link" href="/users/login/">Login</a>
                     <a class="nav-link" href="/users/signup/">Signup</a>
                 {% endif %}
-                <a class="nav-link" href="/cart/">Cart 🛒</a>
+                <a class="nav-link" href="/cart/">Cart </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
     <div class="hero-car">
-        <h1 class="fw-bold">🔧 Find Parts for Your Car</h1>
+        <h1 class="fw-bold"> Find Parts for Your Car</h1>
         <p class="fs-5">Select your car make and model to find compatible parts</p>
     </div>
 
@@ -60,7 +60,7 @@
                 {% for make in makes %}
                 <a href="/browse-by-car/?make={{ make.id }}"
                    class="btn {% if selected_make.id == make.id %}btn-custom{% else %}btn-outline-secondary{% endif %} btn-lg">
-                    🚗 {{ make.name }}
+                     {{ make.name }}
                 </a>
                 {% empty %}
                 <p class="text-muted">No car brands added yet. Add them from admin panel!</p>
@@ -111,7 +111,7 @@
                         <p class="text-muted">{{ product.category }}</p>
                         <h5 class="text-danger fw-bold">₹{{ product.price }}</h5>
                         <a href="/product/{{ product.pk }}/"
-                           class="btn btn-custom w-100 mt-2">View Details 🔍</a>
+                           class="btn btn-custom w-100 mt-2">View Details </a>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
         </div>
         {% else %}
         <div class="text-center mt-3">
-            <h4>No parts found for {{ selected_model }} 😢</h4>
+            <h4>No parts found for {{ selected_model }} </h4>
             <p class="text-muted">Try adding compatible parts from the admin panel!</p>
             <a href="/" class="btn btn-custom btn-lg mt-2">Browse All Products</a>
         </div>

@@ -97,11 +97,11 @@
 
     <!-- Promo Banner -->
     <div class="promo-banner">
-        🎉 FREE SHIPPING on orders above ₹999 &nbsp;|&nbsp;
-        🔥 Use code <span
+         FREE SHIPPING on orders above ₹999 &nbsp;|&nbsp;
+         Use code <span
             style="background:#1a1a2e; color:white; padding:2px 8px; border-radius:5px;">AUTOPARTS10</span> for 10% OFF
         &nbsp;|&nbsp;
-        ⚡ New arrivals every week!
+         New arrivals every week!
     </div>
 
     <!-- Navbar -->
@@ -109,7 +109,7 @@
         <div class="container">
 
             <!-- Brand -->
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts</a>
+            <a class="navbar-brand fw-bold fs-4" href="/"> AutoParts</a>
 
             <!-- Search Bar Middle -->
             <form action="/search/" method="GET" class="d-flex mx-auto" style="width: 40%;">
@@ -121,27 +121,27 @@
 
             <!-- Right Links -->
             <div class="d-flex gap-3 align-items-center">
-                <a class="nav-link" href="/browse-by-car/">🚗 Find by Car</a>
+                <a class="nav-link" href="/browse-by-car/"> Find by Car</a>
                 {% if request.user.is_staff %}
-                <a class="nav-link" href="/sales-report/">📊 Sales Report</a>
+                <a class="nav-link" href="/sales-report/">Sales Report</a>
                 {% endif %}
-                <a class="nav-link" href="/cart/">🛒 Cart</a>
+                <a class="nav-link" href="/cart/"> Cart</a>
 
                 {% if request.user.is_authenticated %}
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        👤 {{ request.user.username }}
+                         {{ request.user.username }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/orders/">📦 My Orders</a></li>
+                        <li><a class="dropdown-item" href="/orders/"> My Orders</a></li>
                         {% if request.user.is_staff %}
-                        <li><a class="dropdown-item" href="/sales-report/">📊 Sales Report</a></li>
-                        <li><a class="dropdown-item" href="/admin/">⚙️ Admin Panel</a></li>
+                        <li><a class="dropdown-item" href="/sales-report/"> Sales Report</a></li>
+                        <li><a class="dropdown-item" href="/admin/">Admin Panel</a></li>
                         {% endif %}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/users/logout/">🚪 Logout</a></li>
+                        <li><a class="dropdown-item" href="/users/logout/"> Logout</a></li>
                     </ul>
                 </div>
                 {% else %}
@@ -157,7 +157,7 @@
     <div class="hero">
         <h1 class="fw-bold">Find the Right Part for Your Car</h1>
         <p class="fs-5">Quality automotive parts at the best prices</p>
-        <a href="#products" class="btn btn-light btn-lg mt-3">Shop Now 🛍️</a>
+        <a href="#products" class="btn btn-light btn-lg mt-3">Shop Now </a>
     </div>
 
     <!-- Categories -->
@@ -187,12 +187,12 @@
     <!-- New Arrivals Section -->
     {% if not selected %}
     <div class="container mt-5">
-        <h2 class="fw-bold section-header">✨ New Arrivals</h2>
+        <h2 class="fw-bold section-header">New Arrivals</h2>
         <div class="row g-4">
             {% for product in new_arrivals %}
             <div class="col-md-3">
                 <div class="card product-card h-100 position-relative">
-                    <span class="new-arrival-badge">🆕 New</span>
+                    <span class="new-arrival-badge"> New</span>
                     {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" style="height:180px; object-fit:cover;">
                     {% else %}
@@ -235,12 +235,12 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="text-danger fw-bold mb-0">₹{{ product.price }}</h5>
                             {% if product.stock > 0 %}
-                            <span class="badge bg-success">✅ In Stock</span>
+                            <span class="badge bg-success">In Stock</span>
                             {% else %}
-                            <span class="badge bg-danger">❌ Out of Stock</span>
+                            <span class="badge bg-danger"> Out of Stock</span>
                             {% endif %}
                         </div>
-                        <a href="/product/{{ product.pk }}/" class="btn btn-custom w-100 mt-2">View Details 🔍</a>
+                        <a href="/product/{{ product.pk }}/" class="btn btn-custom w-100 mt-2">View Details </a>
                     </div>
                 </div>
             </div>

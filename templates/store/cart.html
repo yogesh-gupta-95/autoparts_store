@@ -43,23 +43,23 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <a class="navbar-brand fw-bold fs-4" href="/">AutoParts Store</a>
             <div class="d-flex gap-3">
                 {% if request.user.is_authenticated %}
-                <span class="nav-link">👤 {{ request.user.username }}</span>
+                <span class="nav-link"> {{ request.user.username }}</span>
                 <a class="nav-link" href="/users/logout/">Logout</a>
                 {% else %}
                 <a class="nav-link" href="/users/login/">Login</a>
                 <a class="nav-link" href="/users/signup/">Signup</a>
                 {% endif %}
-                <a class="nav-link" href="/cart/">Cart 🛒</a>
+                <a  class="nav-link" href="/cart/">Cart </a>
             </div>
         </div>
     </nav>
 
     <!-- Cart -->
     <div class="container mt-5">
-        <h2 class="fw-bold mb-4">🛒 Your Cart</h2>
+        <h2 class="fw-bold mb-4">Your Cart</h2>
 
         {% if cart.items.all %}
         <div class="card p-4">
@@ -101,12 +101,12 @@
             <!-- Total -->
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <a href="/" class="btn btn-outline-secondary btn-lg">
-                    🛍️ Continue Shopping
+                     Continue Shopping
                 </a>
                 <div class="text-end">
                     <h4 class="fw-bold">Total: ₹{{ cart.get_total }}</h4>
                     <a href="/checkout/" class="btn btn-custom btn-lg mt-2">
-                        Proceed to Checkout 💳
+                        Proceed to Checkout 
                     </a>
                 </div>
             </div>
@@ -114,8 +114,8 @@
             {% else %}
             <!-- Empty Cart -->
             <div class="text-center mt-5">
-                <h3>Your cart is empty! 😢</h3>
-                <a href="/" class="btn btn-custom btn-lg mt-3">Continue Shopping 🛍️</a>
+                <h3>Your cart is empty! </h3>
+                <a href="/" class="btn btn-custom btn-lg mt-3">Continue Shopping </a>
             </div>
             {% endif %}
 

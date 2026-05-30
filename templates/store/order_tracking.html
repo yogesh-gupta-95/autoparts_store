@@ -75,20 +75,20 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts</a>
+            <a class="navbar-brand fw-bold fs-4" href="/"> AutoParts</a>
             <div class="d-flex gap-3 align-items-center">
-                <a class="nav-link" href="/browse-by-car/">🚗 Find by Car</a>
-                <a class="nav-link" href="/cart/">🛒 Cart</a>
+                <a class="nav-link" href="/browse-by-car/">Find by Car</a>
+                <a class="nav-link" href="/cart/"> Cart</a>
                 {% if request.user.is_authenticated %}
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#"
                        data-bs-toggle="dropdown">
-                        👤 {{ request.user.username }}
+                         {{ request.user.username }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="/orders/">📦 My Orders</a></li>
+                        <li><a class="dropdown-item" href="/orders/"> My Orders</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/users/logout/">🚪 Logout</a></li>
+                        <li><a class="dropdown-item" href="/users/logout/"> Logout</a></li>
                     </ul>
                 </div>
                 {% endif %}
@@ -97,7 +97,7 @@
     </nav>
 
     <div class="container mt-5">
-        <h2 class="fw-bold mb-4 section-header">📦 Order Tracking</h2>
+        <h2 class="fw-bold mb-4 section-header"> Order Tracking</h2>
 
         <div class="card p-4 mb-4">
 
@@ -149,13 +149,13 @@
                 {% elif order.status == 'delivered' %}alert-success
                 {% endif %}">
                 {% if order.status == 'pending' %}
-                    ⏳ Your order has been placed and is being processed.
+                     Your order has been placed and is being processed.
                 {% elif order.status == 'paid' %}
-                    💳 Payment confirmed! Your order is being prepared for shipping.
+                     Payment confirmed! Your order is being prepared for shipping.
                 {% elif order.status == 'shipped' %}
-                    🚚 Your order is on the way! Expected delivery in 2-3 days.
+                     Your order is on the way! Expected delivery in 2-3 days.
                 {% elif order.status == 'delivered' %}
-                    📦 Your order has been delivered! Enjoy your purchase!
+                     Your order has been delivered! Enjoy your purchase!
                 {% endif %}
             </div>
 
@@ -187,7 +187,7 @@
                     ← Back to Orders
                 </a>
                 <a href="/" class="btn btn-custom">
-                    🛍️ Continue Shopping
+                     Continue Shopping
                 </a>
             </div>
 

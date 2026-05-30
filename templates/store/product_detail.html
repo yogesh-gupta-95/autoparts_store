@@ -43,16 +43,16 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <a class="navbar-brand fw-bold fs-4" href="/"> AutoParts Store</a>
             <div class="d-flex gap-3">
                 {% if request.user.is_authenticated %}
-                <span class="nav-link">👤 {{ request.user.username }}</span>
+                <span class="nav-link"> {{ request.user.username }}</span>
                 <a class="nav-link" href="/users/logout/">Logout</a>
                 {% else %}
                 <a class="nav-link" href="/users/login/">Login</a>
                 <a class="nav-link" href="/users/signup/">Signup</a>
                 {% endif %}
-                <a class="nav-link" href="/cart/">Cart 🛒</a>
+                <a class="nav-link" href="/cart/">Cart </a>
             </div>
         </div>
     </nav>
@@ -85,7 +85,7 @@
 
                 <!-- Specifications Table -->
                 <div class="card p-3 mb-3" style="border-radius:10px; background:#f8f9fa;">
-                    <h6 class="fw-bold mb-3">📋 Specifications</h6>
+                    <h6 class="fw-bold mb-3"> Specifications</h6>
                     <table class="table table-sm mb-0">
                         {% if product.brand %}
                         <tr>
@@ -125,9 +125,9 @@
                             <td class="text-muted">Availability</td>
                             <td>
                                 {% if product.stock > 0 %}
-                                <span class="badge bg-success">✅ In Stock ({{ product.stock }} left)</span>
+                                <span class="badge bg-success"> In Stock ({{ product.stock }} left)</span>
                                 {% else %}
-                                <span class="badge bg-danger">❌ Out of Stock</span>
+                                <span class="badge bg-danger"> Out of Stock</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -140,15 +140,15 @@
 
                 <!-- Stock Status -->
                 {% if product.stock > 0 %}
-                <p class="text-success fw-bold">✅ In Stock ({{ product.stock }} available)</p>
+                <p class="text-success fw-bold">In Stock ({{ product.stock }} available)</p>
                 {% else %}
-                <p class="text-danger fw-bold">❌ Out of Stock</p>
+                <p class="text-danger fw-bold">Out of Stock</p>
                 {% endif %}
 
                 <!-- Add to Cart Button -->
                 {% if product.stock > 0 %}
                 <a href="/add-to-cart/{{ product.pk }}/" class="btn btn-custom btn-lg w-100 mt-3">
-                    Add to Cart 🛒
+                    Add to Cart 
                 </a>
                 {% else %}
                 <button class="btn btn-secondary btn-lg w-100 mt-3" disabled>
@@ -164,7 +164,7 @@
     {% if related %}
     <div class="container mt-5 mb-4">
         <h3 class="fw-bold mb-4" style="border-left: 5px solid #e94560; padding-left: 15px;">
-            🔗 Related Products
+             Related Products
         </h3>
         <div class="row g-4">
             {% for item in related %}
@@ -201,7 +201,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
 
-                <h3 class="fw-bold mb-4">⭐ Customer Reviews</h3>
+                <h3 class="fw-bold mb-4"> Customer Reviews</h3>
 
                 <!-- Review Form -->
                 {% if request.user.is_authenticated %}
@@ -230,7 +230,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-custom w-100">
-                            Submit Review ⭐
+                            Submit Review 
                         </button>
                     </form>
                 </div>
@@ -245,7 +245,7 @@
                 {% for review in reviews %}
                 <div class="card p-3 mb-3" style="border-radius:10px;">
                     <div class="d-flex justify-content-between">
-                        <strong>👤 {{ review.user.username }}</strong>
+                        <strong> {{ review.user.username }}</strong>
                         <small class="text-muted">
                             {{ review.created_at|date:"d M Y" }}
                         </small>

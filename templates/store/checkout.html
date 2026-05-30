@@ -26,7 +26,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <a class="navbar-brand fw-bold fs-4" href="/">AutoParts Store</a>
         </div>
     </nav>
 
@@ -40,7 +40,7 @@
 
                     <!-- Shipping Info -->
                     <div class="card p-4 mb-4">
-                        <h5 class="section-title">🚚 Shipping Information</h5>
+                        <h5 class="section-title">Shipping Information</h5>
 
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -80,7 +80,7 @@
 
                     <!-- Payment Info -->
                     <div class="card p-4 mb-4">
-                        <h5 class="section-title">💳 Payment Information</h5>
+                        <h5 class="section-title"> Payment Information</h5>
 
                         <div class="row g-3">
                             <div class="col-12">
@@ -106,12 +106,12 @@
                         </div>
 
                         <div class="alert alert-info mt-3">
-                            🧪 <strong>Test Mode</strong> — Use any details to simulate payment
+                             <strong>Test Mode</strong> — Use any details to simulate payment
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-custom w-100 btn-lg">
-                        Place Order & Pay ₹{{ total }} 💳
+                        Place Order & Pay ₹{{ total }} 
                     </button>
                     <a href="/cart/" class="btn btn-outline-secondary w-100 mt-2">
                         ← Back to Cart
@@ -123,7 +123,7 @@
             <!-- Right Side — Order Summary -->
             <div class="col-md-5">
                 <div class="card p-4">
-                    <h5 class="section-title">📦 Order Summary</h5>
+                    <h5 class="section-title">Order Summary</h5>
 
                     {% for item in cart.items.all %}
                     <div class="d-flex justify-content-between mb-2">
@@ -140,8 +140,8 @@
 
                     <!-- Delivery Info -->
                     <div class="alert alert-success mt-3">
-                        🚚 <strong>Free Delivery</strong> on this order!<br>
-                        📅 Expected delivery in <strong>3-5 days</strong>
+                         <strong>Free Delivery</strong> on this order!<br>
+                         Expected delivery in <strong>3-5 days</strong>
                     </div>
                 </div>
             </div>

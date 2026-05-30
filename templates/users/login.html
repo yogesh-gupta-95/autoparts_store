@@ -112,14 +112,14 @@
 
         <!-- Brand -->
         <div class="brand">
-            <h2>🚗 AutoParts Store</h2>
+            <h2> AutoParts Store</h2>
             <p>Welcome back! Login to your account</p>
         </div>
 
         <!-- Error Messages -->
         {% if form.errors %}
         <div class="error-box">
-            <p>⚠️ Invalid username or password. Please try again.</p>
+            <p> Invalid username or password. Please try again.</p>
         </div>
         {% endif %}
 
@@ -128,19 +128,19 @@
             {% csrf_token %}
 
             <div class="mb-3">
-                <label>👤 Username</label>
+                <label>Username</label>
                 <input type="text" name="username" class="form-control"
                        placeholder="Enter your username" required>
             </div>
 
             <div class="mb-3">
-                <label>🔒 Password</label>
+                <label> Password</label>
                 <input type="password" name="password" class="form-control"
                        placeholder="Enter your password" required>
             </div>
 
             <button type="submit" class="btn-login">
-                Login 🚀
+                Login 
             </button>
         </form>
 

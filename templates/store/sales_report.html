@@ -24,16 +24,16 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts</a>
+            <a class="navbar-brand fw-bold fs-4" href="/"> AutoParts</a>
             <div class="d-flex gap-3">
-                <a class="nav-link" href="/admin/">⚙️ Admin Panel</a>
-                <a class="nav-link" href="/">🏠 Home</a>
+                <a class="nav-link" href="/admin/"> Admin Panel</a>
+                <a class="nav-link" href="/"> Home</a>
             </div>
         </div>
     </nav>
 
     <div class="container mt-5">
-        <h2 class="fw-bold mb-4 section-header">📊 Sales Report</h2>
+        <h2 class="fw-bold mb-4 section-header"> Sales Report</h2>
 
         <!-- Stats Cards -->
         <div class="row g-4 mb-5">
@@ -41,28 +41,28 @@
                 <div class="stat-card" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
                     <h2 class="fw-bold">{{ total_orders }}</h2>
                     <p class="mb-0">Total Orders</p>
-                    <div style="font-size:30px;">📦</div>
+                    <div style="font-size:30px;"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card" style="background: linear-gradient(135deg, #e94560, #c73652);">
                     <h2 class="fw-bold">₹{{ total_revenue }}</h2>
                     <p class="mb-0">Total Revenue</p>
-                    <div style="font-size:30px;">💰</div>
+                    <div style="font-size:30px;"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card" style="background: linear-gradient(135deg, #28a745, #1e7e34);">
                     <h2 class="fw-bold">{{ paid_orders }}</h2>
                     <p class="mb-0">Paid Orders</p>
-                    <div style="font-size:30px;">✅</div>
+                    <div style="font-size:30px;"></div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card" style="background: linear-gradient(135deg, #17a2b8, #117a8b);">
                     <h2 class="fw-bold">{{ delivered }}</h2>
                     <p class="mb-0">Delivered</p>
-                    <div style="font-size:30px;">🚚</div>
+                    <div style="font-size:30px;"></div>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
             <!-- Top Products -->
             <div class="col-md-4">
                 <div class="card p-4">
-                    <h4 class="fw-bold mb-4 section-header">🏆 Top Products</h4>
+                    <h4 class="fw-bold mb-4 section-header"> Top Products</h4>
                     {% for item in top_products %}
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <span>{{ forloop.counter }}. {{ item.product__name }}</span>
@@ -122,23 +122,23 @@
 
                 <!-- Order Status Summary -->
                 <div class="card p-4 mt-4">
-                    <h4 class="fw-bold mb-4 section-header">📋 Order Status</h4>
+                    <h4 class="fw-bold mb-4 section-header"> Order Status</h4>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>⏳ Pending</span>
+                        <span> Pending</span>
                         <span class="badge bg-warning text-dark">
                             {{ total_orders|add:"-"|add:paid_orders }}
                         </span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>✅ Paid</span>
+                        <span> Paid</span>
                         <span class="badge bg-success">{{ paid_orders }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>🚚 Shipped</span>
+                        <span> Shipped</span>
                         <span class="badge bg-info">{{ shipped_orders }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <span>📦 Delivered</span>
+                        <span> Delivered</span>
                         <span class="badge bg-primary">{{ delivered }}</span>
                     </div>
                 </div>

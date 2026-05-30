@@ -124,7 +124,7 @@
 
         <!-- Brand -->
         <div class="brand">
-            <h2>🚗 AutoParts Store</h2>
+            <h2> AutoParts Store</h2>
             <p>Create your account to start shopping</p>
         </div>
 
@@ -133,7 +133,7 @@
         <div class="error-box">
             {% for field in form %}
                 {% for error in field.errors %}
-                    <p>⚠️ {{ error }}</p>
+                    <p> {{ error }}</p>
                 {% endfor %}
             {% endfor %}
         </div>
@@ -144,26 +144,26 @@
             {% csrf_token %}
 
             <div class="mb-3">
-                <label>👤 Username</label>
+                <label> Username</label>
                 <input type="text" name="username" class="form-control"
                        placeholder="Choose a username" required>
             </div>
 
             <div class="mb-3">
-                <label>🔒 Password</label>
+                <label> Password</label>
                 <input type="password" name="password1" class="form-control"
                        placeholder="Create a password" required>
                 <small class="text-muted">Min 8 characters, not too common</small>
             </div>
 
             <div class="mb-3">
-                <label>🔒 Confirm Password</label>
+                <label> Confirm Password</label>
                 <input type="password" name="password2" class="form-control"
                        placeholder="Repeat your password" required>
             </div>
 
             <button type="submit" class="btn-signup">
-                Create Account 🚀
+                Create Account 
             </button>
         </form>
 

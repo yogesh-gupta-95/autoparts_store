@@ -18,17 +18,17 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">🚗 AutoParts Store</a>
+            <a class="navbar-brand fw-bold fs-4" href="/">AutoParts Store</a>
             <div class="d-flex gap-3">
                 {% if request.user.is_authenticated %}
-                    <span class="nav-link">👤 {{ request.user.username }}</span>
+                    <span class="nav-link"> {{ request.user.username }}</span>
                     <a class="nav-link" href="/orders/">My Orders</a>
                     <a class="nav-link" href="/users/logout/">Logout</a>
                 {% else %}
                     <a class="nav-link" href="/users/login/">Login</a>
                     <a class="nav-link" href="/users/signup/">Signup</a>
                 {% endif %}
-                <a class="nav-link" href="/cart/">Cart 🛒</a>
+                <a class="nav-link" href="/cart/">Cart </a>
             </div>
         </div>
     </nav>
@@ -39,7 +39,7 @@
                 <input type="text" name="q" class="form-control"
                        placeholder="Search for brake pads, batteries, tyres..."
                        value="{{ query }}">
-                <button class="btn btn-custom" type="submit">🔍 Search</button>
+                <button class="btn btn-custom" type="submit"> Search</button>
             </div>
         </form>
 
@@ -61,7 +61,7 @@
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="text-muted">{{ product.category }}</p>
                         <h5 class="text-danger fw-bold">₹{{ product.price }}</h5>
-                        <a href="/product/{{ product.pk }}/" class="btn btn-custom w-100 mt-2">View Details 🔍</a>
+                        <a href="/product/{{ product.pk }}/" class="btn btn-custom w-100 mt-2">View Details </a>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
         </div>
         {% elif query %}
         <div class="text-center mt-5">
-            <h3>No products found for "{{ query }}" 😢</h3>
-            <a href="/" class="btn btn-custom btn-lg mt-3">Browse All Products 🛍️</a>
+            <h3>No products found for "{{ query }}" </h3>
+            <a href="/" class="btn btn-custom btn-lg mt-3">Browse All Products </a>
         </div>
         {% endif %}
     </div>
